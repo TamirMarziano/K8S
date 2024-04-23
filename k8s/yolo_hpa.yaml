@@ -1,0 +1,14 @@
+# k8s/yolo_hpa.yaml
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: yolo-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: yolo5
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 60
