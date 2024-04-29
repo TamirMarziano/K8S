@@ -11,4 +11,4 @@ spec:
     name: yolo5
   minReplicas: 1
   maxReplicas: 3
-  targetCPUUtilizationPercentage: 60
+  targetCPUUtilizationPercentage: 20
