@@ -7,6 +7,11 @@ import os
 import boto3
 import json
 import requests
+import signal
+import docker
+import sys
+
+container_id = os.getenv('HOSTNAME')
 
 images_bucket = os.environ['BUCKET_NAME']
 queue_name = os.environ['SQS_QUEUE_NAME']
@@ -15,6 +20,19 @@ sqs_client = boto3.client('sqs', region_name='eu-central-1')
 
 with open("data/coco128.yaml", "r") as stream:
     names = yaml.safe_load(stream)['names']
+
+
+def termination_handler(signum, frame):
+    print("Termination requested")
+    print("Stopping container...")
+    client = docker.from_env()
+    container = client.containers.get(container_id)
+    container.stop()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGTERM, termination_handler)
+
 
 
 def consume():
