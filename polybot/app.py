@@ -4,10 +4,27 @@ import os
 from bot import ObjectDetectionBot
 import boto3
 import json
+import signal
+import docker
+import sys
+
+container_id = os.getenv('HOSTNAME')
 
 app = flask.Flask(__name__)
 
 region_name = 'eu-central-1'
+
+
+def termination_handler(signum, frame):
+    print("Termination requested")
+    print("Stopping container...")
+    client = docker.from_env()
+    container = client.containers.get(container_id)
+    container.stop()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGTERM, termination_handler)
 
 # TODO load TELEGRAM_TOKEN value from Secret Manager
 client = boto3.client('secretsmanager', region_name=region_name)
