@@ -8,11 +8,16 @@ import signal
 import docker
 import sys
 
+TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
+TOKEN = os.environ['TOKEN']
+DYNAMODB_TABLE_NAME = os.environ['DYNAMODB_TABLE_NAME']
+REGION = os.environ['REGION']
+
 container_id = os.getenv('HOSTNAME')
 
 app = flask.Flask(__name__)
 
-region_name = 'eu-central-1'
+
 
 
 def termination_handler(signum, frame):
@@ -27,14 +32,14 @@ def termination_handler(signum, frame):
 signal.signal(signal.SIGTERM, termination_handler)
 
 # TODO load TELEGRAM_TOKEN value from Secret Manager
-client = boto3.client('secretsmanager', region_name=region_name)
+client = boto3.client('secretsmanager', region_name=REGION)
 response = client.get_secret_value(
-    SecretId='TamirMarzToken',
+    SecretId=TOKEN,
 )
 response = json.loads(response['SecretString'])
 TELEGRAM_TOKEN = response['TELEGRAM_TOKEN']
 
-TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
+
 
 
 @app.route('/', methods=['GET'])
@@ -54,8 +59,8 @@ def results():
     prediction_id = request.args.get('predictionId')
 
     # TODO use the prediction_id to retrieve results from DynamoDB and send to the end-user
-    dynamodb = boto3.client('dynamodb', region_name=region_name)
-    table_name = 'TamirAWS'
+    dynamodb = boto3.client('dynamodb', region_name=REGION)
+    table_name = DYNAMODB_TABLE_NAME
     key = {
         'prediction_id': {'S': prediction_id}
     }

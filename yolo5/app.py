@@ -13,10 +13,12 @@ import sys
 
 container_id = os.getenv('HOSTNAME')
 
-images_bucket = os.environ['BUCKET_NAME']
-queue_name = os.environ['SQS_QUEUE_NAME']
+region = os.environ['REGION']
+images_bucket = os.environ['S3_BUCKET']
+queue_name = os.environ['QUEUE_URL']
+DYNAMODB_TABLE_NAME = os.environ['DYNAMODB_TABLE_NAME']
 
-sqs_client = boto3.client('sqs', region_name='eu-central-1')
+sqs_client = boto3.client('sqs', region_name=region)
 
 with open("data/coco128.yaml", "r") as stream:
     names = yaml.safe_load(stream)['names']
@@ -36,7 +38,7 @@ signal.signal(signal.SIGTERM, termination_handler)
 
 
 def consume():
-    region_name = 'eu-central-1'
+    region_name = region
     while True:
         response = sqs_client.receive_message(QueueUrl=queue_name, MaxNumberOfMessages=1, WaitTimeSeconds=5)
 
@@ -104,7 +106,7 @@ def consume():
 
                 # TODO store the prediction_summary in a DynamoDB table
                 dynamodb = boto3.client('dynamodb', region_name=region_name)
-                table_name = 'TamirAWS'
+                table_name = DYNAMODB_TABLE_NAME
                 item = {
                     "prediction_id": {'S': prediction_id},
                     "chat_id": {'N': str(chat_id)},

@@ -70,7 +70,11 @@ class Bot:
 
 class ObjectDetectionBot(Bot):
     def handle_message(self, msg):
-        region_name = 'eu-central-1'
+        REGION = os.environ['REGION']
+        S3_BUCKET = os.environ['S3_BUCKET']
+        QUEUE_URL = os.environ['QUEUE_URL']
+        region_name = REGION
+
         logger.info(f'Incoming message: {msg}')
         chat_id = msg['chat']['id']
 
@@ -81,11 +85,11 @@ class ObjectDetectionBot(Bot):
             s3 = boto3.client('s3', region_name=region_name)
             img_name = msg['photo'][1]['file_unique_id'] + '.jpeg'
             #down_img = photo_path
-            s3.upload_file(photo_path, 'tamirmarzbuc', img_name)
+            s3.upload_file(photo_path, S3_BUCKET, img_name)
 
             # TODO send a job to the SQS queue
             sqs = boto3.client('sqs', region_name=region_name)
-            queue_url = 'https://sqs.eu-central-1.amazonaws.com/352708296901/TamirMarzQueue'
+            queue_url = QUEUE_URL
             message_body = {"ImgName": img_name, "ChatID": chat_id}
             message_body = json.dumps(message_body)
             sqs.send_message(
