@@ -18,12 +18,22 @@ spec:
     spec:
       containers:
       - name: polybot
-        image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/tamirmarz-repo:k8s_polybot #TODO ECR URL
+        image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/tamirmarz-repo:k8s_polybot_check #TODO ECR URL
         ports:
         - containerPort: 8443
         env:
           - name: TELEGRAM_APP_URL
-            value: "https://tamirmarz.devops-int-college.com"
+            value: "tamirmarz.devops-int-college.com"
+          - name: TOKEN
+            value: "TamirMarzToken"
+          - name: DYNAMODB_TABLE_NAME
+            value: "TamirAWSDev"
+          - name: REGION
+            value: "eu-central-1"
+          - name: S3_BUCKET
+            value: "tamirdevbuc"
+          - name: QUEUE_URL
+            value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirDevQueue"
         volumeMounts:
           - name: tls-secret
             mountPath: /etc/tls-secret
