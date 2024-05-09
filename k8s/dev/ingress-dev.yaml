@@ -1,0 +1,23 @@
+# k8s/ingress-devv.yaml
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8sproj-ing
+spec:
+  tls:
+    - hosts:
+      - tamirmarz.devops-int-college.com
+      secretName: tls-secret
+  rules:
+  - host: tamirmarz.devops-int-college.com 
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: polybotapp-service
+            port: 
+              number: 8443
+  ingressClassName: nginx
