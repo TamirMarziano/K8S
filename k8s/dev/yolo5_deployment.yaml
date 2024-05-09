@@ -17,13 +17,17 @@ spec:
     spec:
       containers:
         - name: yolo5
-          image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/tamirmarz-repo:k8s_yolo5 #TODO ECR URL
+          image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/tamirmarz-repo:k8s_yolo5_check #TODO ECR URL
           env:
-            - name: BUCKET_NAME
-              value: "tamirmarzbuc"
-            - name: SQS_QUEUE_NAME
-              value: "TamirMarzQueue"
-          resources: #TODO Fill CPU&MEMORY
+            - name: REGION
+              value: "eu-central-1"
+            - name: S3_BUCKET
+              value: "TamirAWSDev"
+            - name: QUEUE_URL
+              value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirDevQueue"
+            - name: DYNAMODB_TABLE_NAME
+              value: "TamirAWSDev"
+          resources:
             requests:
               cpu: 500m
               memory: 1Gi

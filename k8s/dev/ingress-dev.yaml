@@ -7,10 +7,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - tamirmarz.devops-int-college.com
+      - tamir-k8s.devops-int-college.com
       secretName: tls-secret
   rules:
-  - host: tamirmarz.devops-int-college.com 
+  - host: tamir-k8s.devops-int-college.com
     http:
       paths:
       - path: /
