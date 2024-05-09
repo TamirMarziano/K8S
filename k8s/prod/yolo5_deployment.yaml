@@ -1,0 +1,44 @@
+# k8s/yolo5_deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo5
+  labels:
+    app: yolo5
+spec:
+  selector:
+    matchLabels:
+      app: yolo5
+  template:
+    metadata:
+      labels:
+        app: yolo5
+    spec:
+      containers:
+        - name: yolo5
+          image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/tamirmarz-repo:k8s_yolo5 #TODO ECR URL
+          env:
+            - name: BUCKET_NAME
+              value: "tamirmarzbuc"
+            - name: SQS_QUEUE_NAME
+              value: "TamirMarzQueue"
+          resources: #TODO Fill CPU&MEMORY
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 700m
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo5-service
+spec:
+  selector:
+    app: yolo5
+  ports:
+    - protocol: TCP
+      port: 6991
+      targetPort: 6991

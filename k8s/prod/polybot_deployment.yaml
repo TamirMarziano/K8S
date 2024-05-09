@@ -1,0 +1,63 @@
+# k8s/polybot_deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polybotapp
+  labels:
+    app: polybotapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: polybotapp
+  template:
+    metadata:
+        labels:
+          app: polybotapp
+    spec:
+      containers:
+      - name: polybot
+        image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/tamirmarz-repo:k8s_polybot #TODO ECR URL
+        ports:
+        - containerPort: 8443
+        env:
+          - name: TELEGRAM_APP_URL
+            value: "https://tamirmarz.devops-int-college.com"
+        volumeMounts:
+          - name: tls-secret
+            mountPath: /etc/tls-secret
+            readOnly: True
+        livenessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: "/"
+            port: 8443
+        readinessProbe: #TODO
+          initialDelaySeconds: 10
+          httpGet:
+            path: "/"
+            port: 8443
+        resources: #TODO Fill CPU&MEMORY
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 80m
+            memory: 128Mi
+      volumes:
+        - name: tls-secret
+          secret:
+            secretName: tls-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: polybotapp-service
+spec:
+  selector:
+    app: polybotapp
+  ports:
+    - protocol: TCP
+      port: 8443
+      targetPort: 8443
