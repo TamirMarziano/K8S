@@ -27,13 +27,13 @@ spec:
           - name: TOKEN
             value: "TamirMarzToken"
           - name: DYNAMODB_TABLE_NAME
-            value: "TamirAWSDev"
+            value: "TamirAWS"
           - name: REGION
             value: "eu-central-1"
           - name: S3_BUCKET
-            value: "tamirdevbuc"
+            value: "tamirmarzbuc"
           - name: QUEUE_URL
-            value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirDevQueue"
+            value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirMarzQueue"
         volumeMounts:
           - name: tls-secret
             mountPath: /etc/tls-secret
@@ -43,12 +43,12 @@ spec:
           httpGet:
             path: "/"
             port: 8443
-        readinessProbe: #TODO
+        readinessProbe:
           initialDelaySeconds: 10
           httpGet:
             path: "/"
             port: 8443
-        resources: #TODO Fill CPU&MEMORY
+        resources:
           requests:
             cpu: 50m
             memory: 64Mi

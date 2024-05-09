@@ -22,12 +22,12 @@ spec:
             - name: REGION
               value: "eu-central-1"
             - name: S3_BUCKET
-              value: "tamirdevbuc"
+              value: "tamirmarzbuc"
             - name: QUEUE_URL
-              value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirDevQueue"
+              value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirMarzQueue"
             - name: DYNAMODB_TABLE_NAME
-              value: "TamirAWSDev" 
-          resources: #TODO Fill CPU&MEMORY
+              value: "TamirAWS"
+          resources:
             requests:
               cpu: 500m
               memory: 1Gi
