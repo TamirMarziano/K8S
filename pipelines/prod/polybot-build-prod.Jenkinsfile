@@ -16,8 +16,8 @@ pipeline {
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-central-1.amazonaws.com
                 cd polybot
                 docker build -t polybot-prod:$BUILD_NUMBER .
-                docker tag polybot-prod:$BUILD_NUMBER $ECR_URL:polybot-prod:$BUILD_NUMBER
-                docker push $ECR_URL:polybot-prod:$BUILD_NUMBER
+                docker tag polybot-prod:$BUILD_NUMBER $ECR_URL:polybot-prod_$BUILD_NUMBER
+                docker push $ECR_URL:polybot-prod_$BUILD_NUMBER
                 '''
             }
         }
