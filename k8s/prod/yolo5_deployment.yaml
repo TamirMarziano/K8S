@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: yolo5
-          image: IMG_URL
+          image: $ECR_URL:yolo5-prod:9
           env:
             - name: REGION
               value: "eu-central-1"
