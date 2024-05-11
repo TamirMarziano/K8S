@@ -24,6 +24,7 @@ pipeline{
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
                    git add $YAML
                    git commit -m "Updating IMG_URL"
+                   git pull
                    git push https://TamirMarziano:$PASSWORD@github.com/TamirMarziano/K8S.git release
                    '''
                 }
