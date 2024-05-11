@@ -18,7 +18,7 @@ pipeline{
                    git config --global user.email "marzianotamir@gmail.com"
                    git config --global user.name "TamirMarziano"
 
-                   git checkout releases
+                   git checkout release
                    git pull
                    git merge origin/master
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
