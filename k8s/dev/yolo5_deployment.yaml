@@ -22,7 +22,7 @@ spec:
             - name: REGION
               value: "eu-central-1"
             - name: S3_BUCKET
-              value: "TamirAWSDev"
+              value: "tamirdevbuc"
             - name: QUEUE_URL
               value: "https://sqs.eu-central-1.amazonaws.com/352708296901/TamirDevQueue"
             - name: DYNAMODB_TABLE_NAME
