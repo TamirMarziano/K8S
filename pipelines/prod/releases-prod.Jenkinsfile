@@ -18,14 +18,12 @@ pipeline{
                    git config --global user.name "TamirMarziano"
 
                    git checkout release
-                   git fetch
-                   git merge -X theirs origin/release
-                   git merge origin/master
                    git pull
+                   git merge origin/master
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
                    git add $YAML
                    git commit -m "Updating IMG_URL"
-                   git push -f https://TamirMarziano:$PASSWORD@github.com/TamirMarziano/K8S.git release
+                   git push https://TamirMarziano:$PASSWORD@github.com/TamirMarziano/K8S.git release
                    '''
                 }
             }
