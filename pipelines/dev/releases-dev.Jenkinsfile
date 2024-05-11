@@ -10,9 +10,9 @@ pipeline{
                    sh '''
                    git
                    if [[ $IMG_URL == *"polybot"* ]]; then
-                        YAML="k8s/prod/polybot_deployment.yaml"
+                        YAML="k8s/dev/polybot_deployment.yaml"
                    else
-                        YAML="k8s/prod/yolo5_deployment.yaml"
+                        YAML="k8s/dev/yolo5_deployment.yaml"
                    fi
 
                    git config --global user.email "marzianotamir@gmail.com"
@@ -28,8 +28,6 @@ pipeline{
                    '''
                 }
             }
-
         }
     }
-
 }

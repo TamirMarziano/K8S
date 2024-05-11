@@ -24,7 +24,7 @@ pipeline {
 
         stage ('Trigger Release') {
             steps{
-                build job: 'releases-prod', wait: false, parameters: [
+                build job: 'ReleasesProd', wait: false, parameters: [
                     string(name:'IMG_URL', value:'$ECR_URL:polybot-prod:$BUILD_NUMBER')
                 ]
             }

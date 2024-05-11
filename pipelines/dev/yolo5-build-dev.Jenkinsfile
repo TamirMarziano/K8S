@@ -14,10 +14,10 @@ pipeline {
             steps {
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 352708296901.dkr.ecr.eu-central-1.amazonaws.com
-                cd polybot
-                docker build -t polybot-dev:$BUILD_NUMBER .
-                docker tag polybot-dev:$BUILD_NUMBER $ECR_URL:polybot-dev_$BUILD_NUMBER
-                docker push $ECR_URL:polybot-dev_$BUILD_NUMBER
+                cd yolo5
+                docker build -t yolo5-dev:$BUILD_NUMBER .
+                docker tag yolo5-dev:$BUILD_NUMBER $ECR_URL:yolo5-dev_$BUILD_NUMBER
+                docker push $ECR_URL:yolo5-dev_$BUILD_NUMBER
                 '''
             }
         }
@@ -25,7 +25,7 @@ pipeline {
         stage ('Trigger Release') {
             steps{
                 build job: 'ReleasesDev', wait: false, parameters: [
-                    string(name:'IMG_URL', value:'$ECR_URL:polybot-dev:$BUILD_NUMBER')
+                    string(name:'IMG_URL', value:'$ECR_URL:yolo5-dev:$BUILD_NUMBER')
                 ]
             }
         }
