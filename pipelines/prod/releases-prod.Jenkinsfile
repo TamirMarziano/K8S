@@ -13,7 +13,7 @@ pipeline{
                    else
                         YAML="k8s/prod/yolo5_deployment.yaml"
                    fi
-                   #forcheck
+
                    git config --global user.email "marzianotamir@gmail.com"
                    git config --global user.name "TamirMarziano"
 
