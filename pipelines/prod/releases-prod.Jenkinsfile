@@ -21,10 +21,10 @@ pipeline{
                    git fetch
                    git merge -X theirs origin/release
                    git merge origin/master
+                   git pull
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
                    git add $YAML
                    git commit -m "Updating IMG_URL"
-                   git pull
                    git push -f https://TamirMarziano:$PASSWORD@github.com/TamirMarziano/K8S.git release
                    '''
                 }
