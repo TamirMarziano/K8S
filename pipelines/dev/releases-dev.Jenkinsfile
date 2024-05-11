@@ -19,7 +19,7 @@ pipeline{
 
                    git checkout release
                    git fetch
-                   git merge --X theirs origin/release
+                   git merge -X theirs origin/release
                    git pull
                    git merge origin/master
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
