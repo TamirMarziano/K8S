@@ -18,7 +18,8 @@ pipeline{
                    git config --global user.name "TamirMarziano"
 
                    git checkout release
-                   git config pull.ff only
+                   git fetch
+                   git merge --X theirs origin/release
                    git pull
                    git merge origin/master
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
