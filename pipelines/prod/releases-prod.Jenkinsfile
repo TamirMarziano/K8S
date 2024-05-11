@@ -8,7 +8,7 @@ pipeline{
             steps {
                 withCredentials([usernamePassword(credentialsId: 'GitHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                    sh '''
-                   if [[ $IMG_URL == *"polybot"* ]]; then
+                   if [[ $IMG_URL =~ "polybot" ]]; then
                         YAML="k8s/prod/polybot_deployment.yaml"
                    else
                         YAML="k8s/prod/yolo5_deployment.yaml"
