@@ -92,7 +92,7 @@ def results():
     bot.send_text(chat_id, detec)
     return 'Ok'
 
-
+#JenkinsChec
 @app.route(f'/loadTest/', methods=['POST'])
 def load_test():
     req = request.get_json()

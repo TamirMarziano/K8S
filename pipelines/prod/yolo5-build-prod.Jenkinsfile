@@ -25,7 +25,7 @@ pipeline {
         stage ('Trigger Release') {
             steps{
                 build job: 'ReleasesProd', wait: false, parameters: [
-                    string(name:'IMG_URL', value:'$ECR_URL:yolo5-prod:$BUILD_NUMBER')
+                    string(name:'IMG_URL', value:"$ECR_URL:yolo5-prod_$BUILD_NUMBER")
                 ]
             }
         }

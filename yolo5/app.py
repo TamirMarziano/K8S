@@ -23,6 +23,7 @@ sqs_client = boto3.client('sqs', region_name=region)
 with open("data/coco128.yaml", "r") as stream:
     names = yaml.safe_load(stream)['names']
 
+#JenkinsCheck
 
 def termination_handler(signum, frame):
     print("Termination requested")
