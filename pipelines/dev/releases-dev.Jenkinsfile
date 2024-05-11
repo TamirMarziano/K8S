@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage ('Update YAML'){
             steps {
-                withCredentials([usernamePassword(credentialsId: 'GitHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                    sh '''
                    git
                    if [[ $IMG_URL == *"polybot"* ]]; then
@@ -24,7 +24,7 @@ pipeline{
                    sed -i "s|image: .*|image: ${IMG_URL}|g" $YAML
                    git add $YAML
                    git commit -m "Updating IMG_URL"
-                   git push https://TamirMarziano:$PASSWORD@github.com/TamirMarziano/K8S.git releases
+                   git push https://TamirMarziano:$PASSWORD@github.com/TamirMarziano/K8S.git release
                    '''
                 }
             }
